@@ -11,6 +11,8 @@
 \RequirePackage[dvipsnames]{xcolor}
 \RequirePackage{hyperref,cleveref}
 
+\RequirePackage{etoolbox} % Needed for \ifstrempty
+
 \newcommand\myshade{90}
 \colorlet{mylinkcolor}{NavyBlue}
 \colorlet{mycitecolor}{Aquamarine}
@@ -115,6 +117,150 @@
 	\begin{mdframed}[]\relax%
 		\label{#2}}{\qed\end{mdframed}}
 
+
+% Définition
+\newcounter{defn}[chapter] \setcounter{defn}{0}
+\renewcommand{\thedefn}{\arabic{chapter}.\arabic{defn}}
+\newenvironment{defn}[2][]{%
+	\refstepcounter{defn}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={%
+					\tikz[baseline=(current bounding box.east),outer sep=0pt]
+					\node[anchor=east,rectangle,fill=cyan!20]
+					{\strut Définition~\thedefn};}}%
+	}%
+	{\mdfsetup{%
+			frametitle={%
+					\tikz[baseline=(current bounding box.east),outer sep=0pt]
+					\node[anchor=east,rectangle,fill=cyan!20]
+					{\strut Définition~\thedefn:~#1};}}%
+	}%
+	\mdfsetup{innertopmargin=10pt,linecolor=cyan!20,%
+		linewidth=2pt,topline=true,%
+		frametitleaboveskip=\dimexpr-\ht\strutbox\relax}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
+
+% Propriété
+\newcounter{prop}[chapter] \setcounter{prop}{0}
+\renewcommand{\theprop}{\arabic{chapter}.\arabic{prop}}
+\newenvironment{prop}[2][]{%
+	\refstepcounter{prop}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={%
+					\tikz[baseline=(current bounding box.east),outer sep=0pt]
+					\node[anchor=east,rectangle,fill=green!20]
+					{\strut Propriété~\theprop};}}%
+	}%
+	{\mdfsetup{%
+			frametitle={%
+					\tikz[baseline=(current bounding box.east),outer sep=0pt]
+					\node[anchor=east,rectangle,fill=green!20]
+					{\strut Propriété~\theprop:~#1};}}%
+	}%
+	\mdfsetup{innertopmargin=10pt,linecolor=green!20,%
+		linewidth=2pt,topline=true,%
+		frametitleaboveskip=\dimexpr-\ht\strutbox\relax}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
+
+% Méthodologie
+\newcounter{meth}[chapter] \setcounter{meth}{0}
+\renewcommand{\themeth}{\arabic{chapter}.\arabic{meth}}
+\newenvironment{meth}[2][]{%
+	\refstepcounter{meth}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={%
+					\tikz[baseline=(current bounding box.east),outer sep=0pt]
+					\node[anchor=east,rectangle,fill=orange!20]
+					{\strut Méthodologie~\themeth};}}%
+	}%
+	{\mdfsetup{%
+			frametitle={%
+					\tikz[baseline=(current bounding box.east),outer sep=0pt]
+					\node[anchor=east,rectangle,fill=orange!20]
+					{\strut Méthodologie~\themeth:~#1};}}%
+	}%
+	\mdfsetup{innertopmargin=10pt,linecolor=orange!20,%
+		linewidth=2pt,topline=true,%
+		frametitleaboveskip=\dimexpr-\ht\strutbox\relax}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
+
+% Démonstration
+\newcounter{demo}[chapter] \setcounter{demo}{0}
+\renewcommand{\thedemo}{\arabic{chapter}.\arabic{demo}}
+\newenvironment{demo}[2][]{%
+	\refstepcounter{demo}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={%
+					\tikz[baseline=(current bounding box.east),outer sep=0pt]
+					\node[anchor=east,rectangle,fill=red!20]
+					{\strut Démonstration~\thedemo};}}%
+	}%
+	{\mdfsetup{%
+			frametitle={%
+					\tikz[baseline=(current bounding box.east),outer sep=0pt]
+					\node[anchor=east,rectangle,fill=red!20]
+					{\strut Démonstration~\thedemo:~#1};}}%
+	}%
+	\mdfsetup{innertopmargin=10pt,linecolor=red!20,%
+		linewidth=2pt,topline=true,%
+		frametitleaboveskip=\dimexpr-\ht\strutbox\relax}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\qed\end{mdframed}}
+
+% Remarque
+\newcounter{rem}[chapter] \setcounter{rem}{0}
+\renewcommand{\therem}{\arabic{chapter}.\arabic{rem}}
+\newenvironment{rem}[2][]{%
+	\refstepcounter{rem}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={%
+					\tikz[baseline=(current bounding box.east),outer sep=0pt]
+					\node[anchor=east,rectangle,fill=yellow!20]
+					{\strut Remarque~\therem};}}%
+	}%
+	{\mdfsetup{%
+			frametitle={%
+					\tikz[baseline=(current bounding box.east),outer sep=0pt]
+					\node[anchor=east,rectangle,fill=yellow!20]
+					{\strut Remarque~\therem:~#1};}}%
+	}%
+	\mdfsetup{innertopmargin=10pt,linecolor=yellow!20,%
+		linewidth=2pt,topline=true,%
+		frametitleaboveskip=\dimexpr-\ht\strutbox\relax}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
+
+% Exemple
+\newcounter{exemple}[chapter] \setcounter{exemple}{0}
+\renewcommand{\theexemple}{\arabic{chapter}.\arabic{exemple}}
+\newenvironment{exemple}[2][]{%
+	\refstepcounter{exemple}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={%
+					\tikz[baseline=(current bounding box.east),outer sep=0pt]
+					\node[anchor=east,rectangle,fill=purple!20]
+					{\strut Exemple~\theexemple};}}%
+	}%
+	{\mdfsetup{%
+			frametitle={%
+					\tikz[baseline=(current bounding box.east),outer sep=0pt]
+					\node[anchor=east,rectangle,fill=purple!20]
+					{\strut Exemple~\theexemple:~#1};}}%
+	}%
+	\mdfsetup{innertopmargin=10pt,linecolor=purple!20,%
+		linewidth=2pt,topline=true,%
+		frametitleaboveskip=\dimexpr-\ht\strutbox\relax}
+	\begin{mdframed}[]\relax%
+		\label{#2}}{\end{mdframed}}
 
 %=================================
 % useful commands
