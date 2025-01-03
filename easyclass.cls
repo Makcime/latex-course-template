@@ -7,14 +7,24 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{easyclass}[2/6/2019 custom lecture note class]
 \LoadClass[twoside=false]{scrbook}
-\RequirePackage[margin=2cm]{geometry}
-% \RequirePackage[left=2.5cm,right=2.5cm,top=2cm,bottom=2.5cm]{geometry}
+% \RequirePackage[margin=2cm]{geometry}
+\RequirePackage[left=2cm,right=2cm,top=2cm,bottom=2.5cm]{geometry}
 
 \RequirePackage{mathtools,amssymb,bm,bbold,enumerate}
 \RequirePackage[dvipsnames]{xcolor}
 
 \RequirePackage{qrcode}
 \RequirePackage{hyperref,cleveref}
+%--------------------------------------------------------------------
+% Bibliography
+\RequirePackage[]{natbib}
+\bibliographystyle{chicago}
+\RequirePackage[french]{babel}
+
+%--------------------------------------------------------------------
+% Bibliography
+\RequirePackage[]{natbib}
+\bibliographystyle{chicago}
 
 \RequirePackage[french]{babel}
 
@@ -45,16 +55,48 @@
 \newcommand{\checkboxEmpty}{$\square$} % Define an empty checkbox symbol
 \newcommand{\checkboxChecked}{$\checkmark$} % Define a checked checkbox symbol
 
+
+\newcommand{\exosep}{
+	\begin{center}
+		\begin{tikzpicture}
+			% \draw[line width=2pt] (0,0) -- (\textwidth,0);
+			% \draw[line width=4pt, rounded corners=0.5pt] (0,0) -- (0.8\textwidth,0);
+			% \draw[line width=2pt, line cap=round] (0,0) -- (0.9\textwidth,0);
+			\draw[line width=2pt, line cap=round] (0,0) -- (\textwidth,0);
+		\end{tikzpicture}
+	\end{center}
+}
+
 \newcommand{\circleNumber}[1]{%
 	\tikz[baseline=(char.base)]{
 		% \node[shape=circle, draw, inner sep=1pt] (char) {\textbf{#1}};
 		% \node[shape=circle, draw=blue, ultra thick, text=blue, inner sep=1pt] (char) {\large\textbf{#1}}
-		\node[shape=circle, draw=black, fill=black, ultra thick, text=white, inner sep=1pt] (char) {\large\textbf{#1}};
+		% \node[shape=circle, draw=black, fill=black, ultra thick, text=white, inner sep=1pt] (char) {\large\textbf{#1}};
+		\node[shape=circle, draw=black, fill=black, ultra thick, text=white, inner sep=2pt, minimum size=1.5em] (char) {\Large\textbf{#1}};
 	}%
 }
+% \newcommand{\circleNumber}[2][]{%
+% 	\tikz[baseline=(char.base)]{
+% 		\node[shape=circle, draw=black, fill=black, ultra thick, text=white, inner sep=2pt, minimum size=2em] (char) {\Large\textbf{#2}};
+% 		\draw[ultra thick] (char.north west) -- ++(3cm, 0) -- ++(#1, 0);
+% 	}%
+% 	\newline
+% }
 
-\newcommand{\lldots}{\ldots\ldots}
+% Define a new counter for exercises, resetting every section
+\newcounter{exercise}[section]
+\renewcommand{\theexercise}{\arabic{exercise}}
+
+% Define the \exercise command
+\newcommand{\exocnt}{%
+	\refstepcounter{exercise}% Increment the counter
+	\noindent\circleNumber{\theexercise}\quad% Display the circled number
+}
+
+\newcommand{\lldots}{\ldots.\ldots}
 \newcommand{\vvec}[1]{\overrightarrow{#1}}
+\newcommand{\vcomp}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
+\newcommand{\vcompd}{\begin{pmatrix} \ldots \\ \ldots \end{pmatrix}}
 
 % Set the default style for enumerate
 \setlist[enumerate,1]{label=\textbf{(\alph*)}, labelsep=1em}
@@ -73,11 +115,6 @@
 	urlcolor   = myurlcolor!\myshade!black,
 	colorlinks = true,
 }
-
-%--------------------------------------------------------------------
-% Bibliography
-\RequirePackage[]{natbib}
-\bibliographystyle{chicago}
 
 %--------------------------------------------------------------------
 % Theorem
@@ -362,7 +399,7 @@
 }
 
 \newcommand{\Defn}[2]{
-	\begin{themedBox}[#1]{cyan}
+	\begin{themedBox}[\faCheckCircle~#1]{cyan}
 		#2
 	\end{themedBox}
 }
@@ -383,7 +420,7 @@
 
 % Wrapper for Démonstration (red)
 \newcommand{\Demonstration}[1]{
-	\begin{themedBox}[Démonstration]{red}
+	\begin{themedBox}[Démonstration]{Orchid}
 		#1
 	\end{themedBox}
 }
@@ -433,17 +470,23 @@
 
 %=================================
 % header and footer
+%=================================
 \RequirePackage{scrlayer-scrpage}
+% Redefine chapter command to set \leftmark manually
+\renewcommand{\chaptermark}[1]{%
+	\markboth{\thechapter.\ #1}{} % Use chapter number and title for \leftmark
+}
+
 \pagestyle{scrheadings}
 \deftripstyle{pagestyle}
-%   [0.5pt]
-%   [0.3pt]
+% [0.5pt]
+[0.3pt]
 {}
 {}
-{\headmark}
+{\footnotesize{\leftmark}}
+{\@courseid -- \@title}
 {}
 {\pagemark}
-{}
 
 \pagestyle{pagestyle}
 \renewcommand{\chapterpagestyle}{pagestyle}
@@ -502,6 +545,23 @@
 	{\large \@version \par}
 }
 
+% make title
+% Simple title command
+\newcommand{\simpletitle}{
+	\begin{tcolorbox}[
+			colback=Gray!75!black,
+			coltext=white,
+			colframe=black!75
+		]
+		\centering
+		{\huge\bfseries \@title \par}
+		\vspace{0.5cm}
+		{\small \@courseid \par}
+	\end{tcolorbox}
+	\vspace{1.5cm}
+}
+
+
 %=================================
 % add current instructor info 
 % on the right
@@ -512,3 +572,91 @@
 		Instructor: #1
 	\end{flushright}
 }
+
+
+
+% \RequirePackage[explicit]{titlesec}
+\RequirePackage{titlesec}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% CHAPTER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titleformat{\chapter}[block]
+{\normalfont\huge\bfseries} % Font & size for chapter title
+{}
+{0pt}
+{%
+\vspace{-4em}% Reduce top spacing before chapter
+\begin{tcolorbox}[
+		colback=Gray!75!black,
+		% colframe=gray!75!black, % Frame color (darker)
+		coltext=white,
+		boxrule=1pt,
+		enlarge top by=0pt,
+		enlarge bottom by=0pt
+	]
+	\centering \thechapter.\hspace{0.5em}%
+	% \centering -- \thechapter --\\ %
+	}
+	[%
+\end{tcolorbox}
+\vspace{-1em}
+]
+
+\titleformat{name=\chapter,numberless}[block]
+{\normalfont\huge\bfseries}
+{}
+{0pt}
+{%
+	\noindent\hrule width\textwidth\vspace{0.5em}%
+	\centering
+}[%
+	\vspace{0.5em}\hrule width\textwidth
+]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titleformat{\section}[block]
+{\normalfont\Large\bfseries}
+{\thesection.}
+{1em}
+{}
+
+\titleformat{name=\section,numberless}[block]
+{\normalfont\Large\bfseries}
+{}
+{0pt}
+{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SUBSECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titleformat{\subsection}[block]
+{\normalfont\large\bfseries}
+{\thesubsection.}
+{1em}
+{}
+
+\titleformat{name=\subsection,numberless}[block]
+{\normalfont\large\bfseries}
+{}
+{0pt}
+{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SUBSUBSECTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titleformat{\subsubsection}[block]
+{\normalfont\normalsize\bfseries}
+{\thesubsubsection.}
+{1em}
+{}
+
+\titleformat{name=\subsubsection,numberless}[block]
+{\normalfont\normalsize\bfseries}
+{}
+{0pt}
+{}
+
+
