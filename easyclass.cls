@@ -57,6 +57,7 @@
 
 
 \newcommand{\exosep}{
+	% \vfill
 	\begin{center}
 		\begin{tikzpicture}
 			% \draw[line width=2pt] (0,0) -- (\textwidth,0);
@@ -65,6 +66,7 @@
 			\draw[line width=2pt, line cap=round] (0,0) -- (\textwidth,0);
 		\end{tikzpicture}
 	\end{center}
+	% \vfill
 }
 
 \newcommand{\circleNumber}[1]{%
@@ -91,6 +93,18 @@
 \newcommand{\exocnt}{%
 	\refstepcounter{exercise}% Increment the counter
 	\noindent\circleNumber{\theexercise}\quad% Display the circled number
+}
+
+% Define the example counter, resetting every section
+\newcounter{example}[section]
+\renewcommand{\theexample}{\thesection.\arabic{example}}
+
+% Define the \example command
+\newcommand{\example}{%
+	\refstepcounter{example}% Increments and makes it referenceable
+	\par\smallskip% Adds a small vertical space before the example
+	\noindent\textbf{Exemple~\theexample.\\}%
+	\space% Ensure a space after the header
 }
 
 \newcommand{\lldots}{\ldots.\ldots}
@@ -481,7 +495,7 @@
 \deftripstyle{pagestyle}
 % [0.5pt]
 [0.3pt]
-{}
+{\Revision}
 {}
 {\footnotesize{\leftmark}}
 {\@courseid -- \@title}
