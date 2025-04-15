@@ -37,12 +37,12 @@
 \RequirePackage{amssymb}  % For symbols like \square and \checkmark
 
 \RequirePackage{tikz} % For drawing diagrams
-\usetikzlibrary{arrows.meta}
+\usetikzlibrary{matrix, positioning, arrows.meta}
 \usetikzlibrary{calc}
 \usetikzlibrary{angles,quotes}
 
 \RequirePackage{fontawesome5} % For checkmark icon
-\RequirePackage{tcolorbox} % Required for colored boxes
+\RequirePackage[most]{tcolorbox} % Required for colored boxes
 \tcbuselibrary{skins}
 \RequirePackage{booktabs}
 \RequirePackage{colortbl}
@@ -50,6 +50,10 @@
 \RequirePackage{makecell} % To allow line breaks inside cells
 \RequirePackage{csquotes} % Fix for \og and \fg
 \RequirePackage{multicol} % For multi-column formatting
+\RequirePackage{setspace}
+\RequirePackage{caption}
+\RequirePackage{eurosym}
+\RequirePackage[utf8]{inputenc}
 
 
 \newcommand{\checkboxEmpty}{$\square$} % Define an empty checkbox symbol
@@ -107,6 +111,7 @@
 	\space% Ensure a space after the header
 }
 
+\newcommand{\ddotfill}[1][3cm]{\makebox[#1]{\dotfill}}
 \newcommand{\lldots}{\ldots.\ldots}
 \newcommand{\vvec}[1]{\overrightarrow{#1}}
 \newcommand{\vcomp}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
@@ -375,6 +380,7 @@
 	bottomtitle=2mm, % Space below the title
 	top=5pt, bottom=5pt, % Padding inside the box
 	left=10pt, right=10pt, % Padding inside the box
+	breakable,
 }
 
 \newtcolorbox{objThemedBox}[2][]{
@@ -495,10 +501,10 @@
 \deftripstyle{pagestyle}
 % [0.5pt]
 [0.3pt]
-{\Revision}
+{\small{\Revision}}
 {}
-{\footnotesize{\leftmark}}
-{\@courseid -- \@title}
+{\small{\leftmark}}
+{\small{\@courseid -- \@title}}
 {}
 {\pagemark}
 
@@ -622,10 +628,10 @@
 {}
 {0pt}
 {%
-	\noindent\hrule width\textwidth\vspace{0.5em}%
+	\noindent\hrule width=\textwidth\vspace{0.5em}%
 	\centering
 }[%
-	\vspace{0.5em}\hrule width\textwidth
+	\vspace{0.5em}\hrule width=\textwidth
 ]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
