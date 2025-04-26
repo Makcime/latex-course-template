@@ -9,6 +9,7 @@
 \LoadClass[twoside=false]{scrbook}
 % \RequirePackage[margin=2cm]{geometry}
 \RequirePackage[left=2cm,right=2cm,top=2cm,bottom=2.5cm]{geometry}
+\RequirePackage{todonotes}
 
 \RequirePackage{mathtools,amssymb,bm,bbold,enumerate}
 \RequirePackage[dvipsnames]{xcolor}
@@ -116,6 +117,34 @@
 \newcommand{\vvec}[1]{\overrightarrow{#1}}
 \newcommand{\vcomp}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
 \newcommand{\vcompd}{\begin{pmatrix} \ldots \\ \ldots \end{pmatrix}}
+
+\ifdefined\withanswers
+	\fancyfoot[C]{\color{red}\textbf{CORRECTIF}}
+\fi
+
+% \newcommand{\answerblank}[1]{\ifdefined\withanswers\else\vspace{#1}\fi}
+\newcommand{\ifnotcorr}[1]{
+	\ifx\withanswers\undefined
+		#1
+	\fi
+}
+\newcommand{\ifcorr}[1]{
+	\ifdefined\withanswers
+		#1
+	\fi
+}
+\newcommand{\ifcorrelse}[2]{
+	\ifdefined\withanswers
+		#1
+	\else
+		#2
+	\fi
+}
+\newcommand{\answerblank}[1]{\ifdefined\withanswers\else\vspace{#1}\fi}
+\newcommand{\corr}[1]{\ifcorr{\textcolor{red}{#1}}}
+\newcommand{\corrr}[2]{\ifcorrelse{\textcolor{red}{#1}}{#2}}
+\newcommand{\corrbf}[2]{\ifcorrelse{\textcolor{red}{\textbf{#1}}}{#2}}
+\newcommand{\corrblock}[2]{\ifcorrelse{{\setstretch{1} \color{red}#1}}{#2}}
 
 % Set the default style for enumerate
 \setlist[enumerate,1]{label=\textbf{(\alph*)}, labelsep=1em}
