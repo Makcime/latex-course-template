@@ -132,7 +132,22 @@
 \newcommand{\vcompd}[1][2]{%
 	\TallPmatrix[#1]{\lldots\\\lldots}%
 }
+\newcommand{\vcompdd}{
+	\vcomp{\ddotfill}{\ddotfill}
+}
 
+% define a math‐style box with a minimum height of 2 em
+\newtcbox{\AnswerBox}{on line,
+	math upper,
+	% colback=white,
+	% colframe=black,
+	% boxsep=1pt,
+	% arc=0pt, outer arc=0pt,
+	% ensure at least 2 em of vertical space:
+	height=1cm,
+	% center vertically
+	valign=bottom
+}
 
 \ifdefined\withanswers
 	\fancyfoot[C]{\color{red}\textbf{CORRECTIF}}
