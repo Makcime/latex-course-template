@@ -115,8 +115,24 @@
 \newcommand{\ddotfill}[1][3cm]{\makebox[#1]{\dotfill}}
 \newcommand{\lldots}{\ldots.\ldots}
 \newcommand{\vvec}[1]{\overrightarrow{#1}}
-\newcommand{\vcomp}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
-\newcommand{\vcompd}{\begin{pmatrix} \ldots \\ \ldots \end{pmatrix}}
+% generic TallPmatrix:
+\newcommand{\TallPmatrix}[2][2]{%
+	{%
+			\renewcommand{\arraystretch}{#1}% scale rows by #1
+			\begin{pmatrix}#2\end{pmatrix}%
+		}%
+}
+% \vcomp[<stretch>]{<first>}{<second>}
+%   <stretch> is optional, default=2
+\newcommand{\vcomp}[3][2]{%
+	\TallPmatrix[#1]{#2\\#3}%
+}
+% \vcompd[<stretch>]
+%   draws two dot‐rows, stretching by <stretch> (default=2)
+\newcommand{\vcompd}[1][2]{%
+	\TallPmatrix[#1]{\lldots\\\lldots}%
+}
+
 
 \ifdefined\withanswers
 	\fancyfoot[C]{\color{red}\textbf{CORRECTIF}}
