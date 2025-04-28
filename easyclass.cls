@@ -575,7 +575,7 @@
 %=================================
 % draw pictures
 \RequirePackage{tikz}
-\usetikzlibrary{arrows,positioning,calc}
+\usetikzlibrary{arrows,positioning,calc,intersections}
 \tikzstyle{labeled}=[execute at begin node=$\scriptstyle,
 	execute at end node=$]
 \RequirePackage{graphicx}
